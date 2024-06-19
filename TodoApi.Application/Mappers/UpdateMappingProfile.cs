@@ -9,9 +9,9 @@ using TodoApi.Domain.Models;
 
 namespace TodoApi.Application.Mappers
 {
-    public class MappingProfile2: Profile
+    public class UpdateMappingProfile: Profile
     {
-        public MappingProfile2()
+        public UpdateMappingProfile()
         {
             CreateMap<CommandUpdate, TodoItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore()) // Ignore Id mapping since it's typically not updated

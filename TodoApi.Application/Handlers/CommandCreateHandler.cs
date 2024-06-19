@@ -10,6 +10,8 @@ using TodoApi.Domain.Models;
 using TodoApi.Infrastructure.Context;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using FluentValidation;
+using TodoApi.Application.Validators;
 
 
 
@@ -20,13 +22,22 @@ namespace TodoApi.Application.Handlers
         
         private readonly TodoContext _context;
         private readonly IMapper _mapper;
-        public CommandCreateHandler(TodoContext context, IMapper mapper)
+        private readonly IValidator<CommandCreate> _createvalidator;
+        public CommandCreateHandler(TodoContext context, IMapper mapper, IValidator<CommandCreate> validator)
         {
             _context = context;
             _mapper = mapper;
+            _createvalidator = validator;
+          
         }
+
         public async Task HandleAsync(CommandCreate command, CancellationToken cancellationToken = default)
         {
+            var validationResult = await _createvalidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
             var todomapper = _mapper.Map<TodoItem>(command);
             _context.TodoItems.Add(todomapper);
             await _context.SaveChangesAsync();

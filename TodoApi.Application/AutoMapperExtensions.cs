@@ -12,7 +12,7 @@ namespace TodoApi.Application
     {
         public static IServiceCollection AddAutoMapperProfiles(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(MappingProfile), typeof(MappingProfile2));
+            services.AddAutoMapper(typeof(CreateMappingProfile), typeof(UpdateMappingProfile));
 
             return services;
         }

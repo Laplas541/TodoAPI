@@ -10,9 +10,9 @@ using TodoApi.Domain.Models;
 
 namespace TodoApi.Application.Mappers
 {
-    public class MappingProfile : Profile
+    public class CreateMappingProfile : Profile
     {
-        public MappingProfile()
+        public CreateMappingProfile()
         {
             CreateMap<CommandCreate, TodoItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
